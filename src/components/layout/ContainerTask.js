@@ -1,49 +1,34 @@
 import Task from '../task/Task.js'
 
-import {useState} from 'react'
+export default function ContainerTask({tasks, handleRemoveTask}){
 
-export default function ContainerTask(){
-
-    const [tasks, setTasks] = useState([
-        {   
     
-            title: 'Estudar Javascript',
-            description: 'Aprender sobre funções',
-            author: 'Lucas Henrique',
-            createAt: '05/08/2022',
-            updatedAt: '06/08/2022',
-            done: false,
-        },
-        {
-            title: 'Estudar React',
-            description: 'Pesquisar sobre os hooks',
-            author: 'Lucas Henrique',
-            createAt: '05/08/2022',
-            updatedAt: '06/08/2022',
-            done: false
-        }
-    ])
 
     function removeTask(index){
-        const newTasks = tasks.filter((task, pos) => index !== pos)
-        setTasks(newTasks)
-        console.log(tasks)
+        handleRemoveTask(index)
+        // setTasks(newTasks)
     }
 
-
     return (
-        <div className='w-4/5 h-3/5 m-auto p-2 overflow-x-auto'>
-            { tasks.length > 0 && (
+            <>
+                { tasks.length > 0 && (
                 tasks.map((task, index) => (
                     <Task 
                         task={task}  
                         key={index}
                         index={index}
-                        handleRemove={removeTask}   
+                        handleRemove={removeTask} 
                     />
                     )
                 )
-            )}
-        </div>
+                )}
+                {tasks.length === 0 && (
+                    <div className='w-full flex justify-center'>
+                        <p className='w-32 bg-red-900 text-slate-300 text-center p-2'>Não há tarefas</p>
+                    </div>
+                )}
+        
+            </>
+            
     )
 }
